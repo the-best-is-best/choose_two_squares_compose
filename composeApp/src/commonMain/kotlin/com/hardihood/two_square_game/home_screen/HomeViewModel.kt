@@ -32,27 +32,25 @@ class HomeViewModel : ScreenModel {
     var playWithFired by mutableStateOf(false)
     var playOnline by mutableStateOf(false)
 
-    var readyForPlay by mutableStateOf(false)
 
 
     fun playOffline() {
         playOnline = false
         showPlayWithFriendsQuestion = true
         if (!adShowed) {
-            com.hardihood.two_square_game.core.services.AdServices.show()
+            com.hardihood.two_square_game.core.services.AdServices.showInterstitialAd()
             adShowed = true
         }
-        readyForPlay = true
+
     }
 
     fun playOnline() {
         playOnline = true
         // multiplayerViewModel.resetGame()
         if (!adShowed) {
-            com.hardihood.two_square_game.core.services.AdServices.show()
+            com.hardihood.two_square_game.core.services.AdServices.showInterstitialAd()
             showNumOfPlayerQuestion = true
         }
-        readyForPlay = true
     }
 
 
@@ -60,7 +58,7 @@ class HomeViewModel : ScreenModel {
 
     fun changeMode(typeModeGame: TypeModeGame) {
 
-        selectedTypeModeGame.id = typeModeGame.id
+        selectedTypeModeGame = typeModeGame
         boardSize = when (typeModeGame.id) {
             1 -> 4
             2 -> 5
@@ -68,6 +66,15 @@ class HomeViewModel : ScreenModel {
             // Add more cases for other days
             else -> 4
         }
+
+    }
+
+    fun gameReady() {
+
+        showPlayWithFriendsQuestion = false
+        showNumOfPlayerQuestion = false
+        playWithFired = false
+        playOnline = false
 
     }
 }

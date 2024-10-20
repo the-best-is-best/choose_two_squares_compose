@@ -1,6 +1,8 @@
 [versions]
 
+compose_toast = "1.0.1"
 composesearchabledropdown = "2.0.8"
+composeWebviewMultiplatform = "1.9.20"
 compottie = "2.0.0-rc01"
 kadmob = "1.0.0-rc2"
 kotlin = "2.0.21"
@@ -14,7 +16,8 @@ ktor = "3.0.0"
 kotlinx-serialization = "1.7.3"
 koin = "4.0.0"
 coil = "3.0.0-rc01"
-buildConfig = "5.4.0"
+buildConfig = "5.5.0"
+kyoutube = "1.0.0"
 voyagerNavigator = "1.1.0-beta03"
 
 [libraries]
@@ -22,6 +25,8 @@ voyagerNavigator = "1.1.0-beta03"
 androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 androidx-uitest-testManifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "androidx-uiTest" }
 androidx-uitest-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "androidx-uiTest" }
+compose-webview-multiplatform = { module = "io.github.kevinnzou:compose-webview-multiplatform", version.ref = "composeWebviewMultiplatform" }
+compose_toast = { module = "io.github.the-best-is-best:compose_toast", version.ref = "compose_toast" }
 composesearchabledropdown = { module = "io.github.the-best-is-best:ComposeSearchableDropdown", version.ref = "composesearchabledropdown" }
 compottie = { module = "io.github.alexzhirkevich:compottie", version.ref = "compottie" }
 kadmob = { module = "io.github.the-best-is-best:kadmob", version.ref = "kadmob" }
@@ -33,6 +38,7 @@ kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-t
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktor" }
+ktor-client-serialization-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
@@ -44,6 +50,7 @@ koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
 coil = { module = "io.coil-kt.coil3:coil-compose-core", version.ref = "coil" }
 coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
+kyoutube = { module = "io.github.the-best-is-best:kyoutube", version.ref = "kyoutube" }
 voyager-koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voyagerNavigator" }
 voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyagerNavigator" }
 voyager-screenmodel = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyagerNavigator" }

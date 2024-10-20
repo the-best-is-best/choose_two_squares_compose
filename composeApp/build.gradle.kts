@@ -33,13 +33,17 @@ kotlin {
         iosArm64(),
         iosSimulatorArm64()
     ).forEach {
+
         it.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+
         }
+
     }
 
     sourceSets {
+
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -69,6 +73,12 @@ kotlin {
 
 
             implementation(project(":core"))
+            implementation(libs.compose.webview.multiplatform)
+
+            implementation(compose.materialIconsExtended)
+            implementation(libs.kyoutube)
+            implementation(libs.compose.toast)
+
 
 
         }
@@ -100,6 +110,7 @@ kotlin {
 
         iosMain.dependencies {
 //            implementation(libs.ktor.client.darwin)
+
         }
 
     }
@@ -108,6 +119,7 @@ kotlin {
 android {
     namespace = "com.hardihood.two_square_game"
     compileSdk = 35
+
 
     defaultConfig {
         minSdk = 21
@@ -118,6 +130,7 @@ android {
         versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
     }
 }
 
@@ -157,4 +170,32 @@ dependencies {
 buildConfig {
     // BuildConfig configuration here.
     // https://github.com/gmazzo/gradle-buildconfig-plugin#usage-in-kts
+
+    buildConfigField(
+        "String",
+        "PRIVACY_URL",
+        "\"http://michelleacademy.getenjoyment.net/two_square_game/privacy_policy/privacy_policy.html\""
+    )
+
+    sourceSets {
+        getByName("androidMain") {
+            buildConfigField(
+                "String",
+                "interstitialAd",
+                "\"ca-app-pub-7284367511062855/7574670867\""
+            )
+            buildConfigField("String", "bannerAd", "\"ca-app-pub-7284367511062855/6312687941\"")
+        }
+        getByName("iosMain") {
+
+            buildConfigField(
+                "String",
+                "interstitialAd",
+                "\"ca-app-pub-7284367511062855/1974850970\""
+            )
+            buildConfigField("String", "bannerAd", "\"ca-app-pub-7284367511062855/9759925938\"")
+
+        }
+    }
+
 }

@@ -54,7 +54,7 @@ fun ShowDialog(
                 Text(
                     text = message,
                     textAlign = TextAlign.Center,
-                    fontSize = 20.sp,
+                    fontSize = 15.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
                     fontFamily = FontFamilies.getMontserrat(),
@@ -67,7 +67,7 @@ fun ShowDialog(
 
                 ElevatedButton(
                     modifier = Modifier
-                        .weight(.3f)
+                        .fillMaxWidth()
                         .padding(horizontal = 16.dp), // Adjusted padding around the button
                     shape = RoundedCornerShape(20.dp),
                     colors = ButtonDefaults.buttonColors(

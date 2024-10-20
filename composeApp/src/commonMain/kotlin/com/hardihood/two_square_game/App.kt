@@ -3,10 +3,13 @@ package com.hardihood.two_square_game
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.lightColorScheme
@@ -28,7 +31,7 @@ internal fun App() = AppTheme(useDarkTheme = false) {
 
     Surface(
         modifier = Modifier.fillMaxSize()
-
+            .windowInsetsPadding(WindowInsets.systemBars)
             .pointerInput(Unit) {
                 detectTapGestures(onTap = {
                     focusManager.clearFocus()
@@ -42,7 +45,8 @@ internal fun App() = AppTheme(useDarkTheme = false) {
             colorScheme = lightColorScheme()
         ) {
             CompositionLocalProvider {
-                Column(
+
+            Column(
                     modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally

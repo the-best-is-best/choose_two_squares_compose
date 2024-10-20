@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.hardihood.two_square_game.core.AndroidManager
 import com.hardihood.two_square_game.core.appModules
+import com.hardihood.two_square_game.core.di.getSharedModules
 import io.github.kadmob.AndroidKAdmob
 import org.koin.core.context.startKoin
 
@@ -19,10 +20,11 @@ class AppActivity : ComponentActivity() {
         AndroidKAdmob.initialization(this)
 
         startKoin {
-            modules(appModules)
+            modules(getSharedModules() + appModules)
         }
         setContent { App() }
     }
+
 }
 
 @Preview

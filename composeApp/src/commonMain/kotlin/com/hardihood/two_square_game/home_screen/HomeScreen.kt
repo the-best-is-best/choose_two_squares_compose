@@ -49,7 +49,10 @@ import com.hardihood.two_square_game.components.MyText
 import com.hardihood.two_square_game.components.MyTextAttribute
 import com.hardihood.two_square_game.core.AppColors
 import com.hardihood.two_square_game.core.FontFamilies
+import com.hardihood.two_square_game.game_screen.GameScreen
 import com.hardihood.two_square_game.home_screen.components.HomeAppBar
+import com.hardihood.two_square_game.how_to_play_screen.HowToPlayScreen
+import com.hardihood.two_square_game.privacy_screen.PrivacyScreen
 import io.github.compose_searchable_dropdown.SearchableDropDown
 import io.github.compose_searchable_dropdown.states.rememberDropdownStates
 import org.jetbrains.compose.resources.painterResource
@@ -184,7 +187,7 @@ class HomeScreen : Screen {
                                 containerColor = AppColors.secondColor
                             ),
                             onClick = {
-                                //   navigator.navigate(HowToPlayScreenDestination())
+                                navigator.push(HowToPlayScreen())
                             }) {
                             MyText(
                                 attribute = MyTextAttribute(
@@ -221,7 +224,7 @@ class HomeScreen : Screen {
                         containerColor = AppColors.secondColor
                     ),
                     onClick = {
-                        //  navigator.navigate(PrivacyScreenDestination())
+                        navigator.push(PrivacyScreen())
                     }) {
                     MyText(
                         attribute = MyTextAttribute(
@@ -243,17 +246,6 @@ class HomeScreen : Screen {
     private fun uiController(viewModel: HomeViewModel, navigator: Navigator) {
 
 
-        if (viewModel.selectedTypeModeGame.id == 1 && viewModel.readyForPlay) {
-            //            navigator.replaceAll(GameScreenDestination(
-            //                2,
-            //                withFriend,
-            //                viewModel.boardSize
-            //
-            //            ))
-        }
-
-
-
         if (viewModel.showNumOfPlayerQuestion) {
             if (!viewModel.playOnline) {
                 AskQuestionDialog(
@@ -263,36 +255,40 @@ class HomeScreen : Screen {
                         Res.string.how_many_bots
                     },
                     btn1Click = {
-                        //                        navigator.navigate(
-                        //                            GameScreenDestination(
-                        //                                2,
-                        //                                playWithFired,
-                        //                                viewModel.boardSize
-                        //
-                        //                            )
-                        //                        )
+                        viewModel.gameReady()
+                        navigator.replaceAll(
+                            GameScreen(
+                                2,
+                                viewModel.playWithFired,
+                                viewModel.boardSize
+                            )
+                        )
+
                     },
                     btn2Click = {
-                        //                        navigator.navigate(
-                        //                            GameScreenDestination(
-                        //                                3,
-                        //                                playWithFired,
-                        //                                viewModel.boardSize
-                        //
-                        //                            )
-                        //                        )
+                        viewModel.gameReady()
+                        navigator.replaceAll(
+                            GameScreen(
+                                3,
+                                viewModel.playWithFired,
+                                viewModel.boardSize
+                            )
+                        )
+
                     },
                     btn3Click = if (viewModel.selectedTypeModeGame.id != 3) {
                         null
                     } else {
                         {
-                            //                            navigator.navigate(
-                            //                                GameScreenDestination(
-                            //                                    4,
-                            //                                    playWithFired,
-                            //                                    viewModel.boardSize
-                            //                                )
-                            //                            )
+                            viewModel.gameReady()
+                            navigator.replaceAll(
+                                GameScreen(
+                                    4,
+                                    viewModel.playWithFired,
+                                    viewModel.boardSize
+                                )
+                            )
+
                         }
                     },
                     btn1Text = if (viewModel.playWithFired) {
@@ -314,6 +310,7 @@ class HomeScreen : Screen {
                 )
             } else {
                 if (viewModel.selectedTypeModeGame.id == 1) {
+                    viewModel.gameReady()
                     //                    navigator.navigate(
                     //                        MultiPlayerScreenDestination(
                     //                            viewModel.boardSize,
@@ -326,6 +323,7 @@ class HomeScreen : Screen {
                         question =
                         Res.string.how_many_players,
                         btn1Click = {
+                            viewModel.gameReady()
                             //                            navigator.navigate(
                             //                                MultiPlayerScreenDestination(
                             //                                    viewModel.boardSize,
@@ -335,6 +333,7 @@ class HomeScreen : Screen {
                             //                            )
                         },
                         btn2Click = {
+                            viewModel.gameReady()
                             //                            navigator.navigate(
                             //                                MultiPlayerScreenDestination(
                             //                                    viewModel.boardSize,
@@ -348,6 +347,7 @@ class HomeScreen : Screen {
                             null
                         } else {
                             {
+                                viewModel.gameReady()
                                 //                                navigator.navigate(
                                 //                                    MultiPlayerScreenDestination(
                                 //                                        viewModel.boardSize,
@@ -376,12 +376,12 @@ class HomeScreen : Screen {
                 btn2Text = Res.string.no,
                 btn1Click = {
                     viewModel.showPlayWithFriendsQuestion = false
-                    playWithFriend(viewModel, true)
+                    playWithFriend(navigator, viewModel, true)
 
                 },
                 btn2Click = {
                     viewModel.showPlayWithFriendsQuestion = false
-                    playWithFriend(viewModel, false)
+                    playWithFriend(navigator, viewModel, false)
 
                 },
                 onDismissRequest = {
@@ -394,14 +394,10 @@ class HomeScreen : Screen {
 
     }
 
-    private fun playWithFriend(viewModel: HomeViewModel, b: Boolean) {
+    private fun playWithFriend(navigator: Navigator, viewModel: HomeViewModel, b: Boolean) {
         if (viewModel.selectedTypeModeGame.id == 1) {
-//                navigator.navigate(GameScreenDestination(
-//                    2,
-//                    withFriend,
-//                    viewModel.boardSize
-//
-//                ))
+            navigator.replaceAll(GameScreen(2, b, viewModel.boardSize))
+
         } else {
             viewModel.playWithFired = b
             viewModel.showNumOfPlayerQuestion = true

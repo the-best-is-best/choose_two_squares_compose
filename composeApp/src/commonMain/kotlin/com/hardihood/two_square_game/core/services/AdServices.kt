@@ -4,6 +4,8 @@ import io.github.kadmob.KAdmobInterstitialAd
 
 expect object AdServices {
     var interstitialAd: KAdmobInterstitialAd
+    var bannerId: String
 
-    fun show()
+    fun showInterstitialAd()
+
 }

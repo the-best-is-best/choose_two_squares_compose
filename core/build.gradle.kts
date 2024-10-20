@@ -16,18 +16,6 @@ kotlin {
         //   instrumentedTestVariant.sourceSetTree.set(KotlinSourceSetTree.test)
     }
 
-//    jvm()
-//
-//    js {
-//        browser()
-//        binaries.executable()
-//    }
-
-//    wasmJs {
-//        browser()
-//        binaries.executable()
-//    }
-
     listOf(
         iosX64(),
         iosArm64(),
@@ -49,6 +37,7 @@ kotlin {
             implementation(libs.ktor.client.serialization)
             implementation(libs.ktor.client.logging)
             implementation(libs.kotlinx.serialization.json)
+            implementation(libs.ktor.client.serialization.json)
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
 
@@ -68,16 +57,6 @@ kotlin {
             implementation(libs.ktor.client.okhttp)
         }
 
-//        jvmMain.dependencies {
-//            implementation(compose.desktop.currentOs)
-//            implementation(libs.kotlinx.coroutines.swing)
-//            implementation(libs.ktor.client.okhttp)
-//        }
-//
-//        jsMain.dependencies {
-//            implementation(compose.html.core)
-//            implementation(libs.ktor.client.js)
-//        }
 
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
@@ -132,4 +111,5 @@ dependencies {
 buildConfig {
     // BuildConfig configuration here.
     // https://github.com/gmazzo/gradle-buildconfig-plugin#usage-in-kts
+
 }

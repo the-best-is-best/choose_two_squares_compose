@@ -21,6 +21,7 @@ import androidx.compose.material3.TooltipDefaults
 import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
@@ -51,8 +52,8 @@ fun HomeAppBar() {
                 .fillMaxWidth()
                 .background(AppColors.secondColor)
                 .padding(10.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
-
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
                 Icons.Filled.Close,

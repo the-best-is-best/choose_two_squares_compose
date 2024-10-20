@@ -52,10 +52,13 @@ class SplashScreen : Screen {
             contentAlignment = Alignment.Center
         ) {
             Image(
+                modifier = Modifier.fillMaxSize(),
                 painter = rememberLottiePainter(
+
                     composition = composition,
                     progress = { progress },
-                ),
+
+                    ),
                 contentDescription = "Lottie animation"
             )
         }
