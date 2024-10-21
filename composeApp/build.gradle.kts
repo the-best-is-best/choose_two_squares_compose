@@ -7,6 +7,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.buildConfig)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.google.firebase.crashlytics)
 }
 
 kotlin {
@@ -79,6 +81,13 @@ kotlin {
             implementation(libs.kyoutube)
             implementation(libs.compose.toast)
 
+            implementation(libs.kfirebase.core)
+            implementation(libs.kfirebase.analytics)
+            implementation(libs.kfirebase.crashlytics)
+            implementation(libs.kfirebase.database)
+
+            api(libs.compose.multiplatform.lifecycle.tracker)
+
 
 
         }
@@ -94,6 +103,9 @@ kotlin {
             implementation(compose.uiTooling)
             implementation(libs.androidx.activityCompose)
             implementation(libs.kotlinx.coroutines.android)
+
+            implementation(libs.androidx.lifecycle.runtime.ktx)
+
 //            implementation(libs.ktor.client.okhttp)
         }
 
@@ -122,7 +134,7 @@ android {
 
 
     defaultConfig {
-        minSdk = 21
+        minSdk = 24
         targetSdk = 35
 
         applicationId = "com.hardihood.two_square_game"

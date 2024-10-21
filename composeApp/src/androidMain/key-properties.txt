@@ -1,0 +1,4 @@
+storePassword=Choose2Squares2024
+keyPassword=Choose2Squares2024
+keyAlias=Choose2Squares
+storeFile=../app/key-store.jks

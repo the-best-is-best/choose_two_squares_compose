@@ -1,6 +1,6 @@
 package com.hardihood.two_square_game.core.main.domain.request
 
-import com.hardihood.two_square_game.core.constants.StaticVar
+import com.hardihood.two_square_game.core.main.constants.StaticVar
 import kotlinx.serialization.EncodeDefault
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable

@@ -1,10 +1,12 @@
 [versions]
 
 compose_toast = "1.0.1"
+composeMultiplatformLifecycleTracker = "1.0.0"
 composesearchabledropdown = "2.0.8"
 composeWebviewMultiplatform = "1.9.20"
 compottie = "2.0.0-rc01"
 kadmob = "1.0.0-rc2"
+kfirebaseCore = "1.0.0-rc3"
 kotlin = "2.0.21"
 compose = "1.7.0"
 agp = "8.7.1"
@@ -18,19 +20,27 @@ koin = "4.0.0"
 coil = "3.0.0-rc01"
 buildConfig = "5.5.0"
 kyoutube = "1.0.0"
+lifecycleRuntimeKtx = "2.8.6"
 voyagerNavigator = "1.1.0-beta03"
-
+google-services = "4.4.2"
+firebase-crashlytics-plugin = "3.0.2"
 [libraries]
 
 androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
+androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-uitest-testManifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "androidx-uiTest" }
 androidx-uitest-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "androidx-uiTest" }
+compose-multiplatform-lifecycle-tracker = { module = "io.github.kevinnzou:compose-multiplatform-lifecycle-tracker", version.ref = "composeMultiplatformLifecycleTracker" }
 compose-webview-multiplatform = { module = "io.github.kevinnzou:compose-webview-multiplatform", version.ref = "composeWebviewMultiplatform" }
 compose_toast = { module = "io.github.the-best-is-best:compose_toast", version.ref = "compose_toast" }
 composesearchabledropdown = { module = "io.github.the-best-is-best:ComposeSearchableDropdown", version.ref = "composesearchabledropdown" }
 compottie = { module = "io.github.alexzhirkevich:compottie", version.ref = "compottie" }
 kadmob = { module = "io.github.the-best-is-best:kadmob", version.ref = "kadmob" }
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
+kfirebase-analytics = { module = "io.github.the-best-is-best:kfirebase-analytics", version.ref = "kfirebaseCore" }
+kfirebase-core = { module = "io.github.the-best-is-best:kfirebase-core", version.ref = "kfirebaseCore" }
+kfirebase-crashlytics = { module = "io.github.the-best-is-best:kfirebase-crashlytics", version.ref = "kfirebaseCore" }
+kfirebase-database = { module = "io.github.the-best-is-best:kfirebase-database", version.ref = "kfirebaseCore" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
@@ -64,3 +74,5 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 buildConfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildConfig" }
 android-library = { id = "com.android.library", version.ref = "agp" }
+google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
+google-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics-plugin" }

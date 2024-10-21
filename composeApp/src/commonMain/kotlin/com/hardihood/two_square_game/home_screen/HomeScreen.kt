@@ -52,6 +52,7 @@ import com.hardihood.two_square_game.core.FontFamilies
 import com.hardihood.two_square_game.game_screen.GameScreen
 import com.hardihood.two_square_game.home_screen.components.HomeAppBar
 import com.hardihood.two_square_game.how_to_play_screen.HowToPlayScreen
+import com.hardihood.two_square_game.multiplayer_screen.MultiplayerScreen
 import com.hardihood.two_square_game.privacy_screen.PrivacyScreen
 import io.github.compose_searchable_dropdown.SearchableDropDown
 import io.github.compose_searchable_dropdown.states.rememberDropdownStates
@@ -311,50 +312,30 @@ class HomeScreen : Screen {
             } else {
                 if (viewModel.selectedTypeModeGame.id == 1) {
                     viewModel.gameReady()
-                    //                    navigator.navigate(
-                    //                        MultiPlayerScreenDestination(
-                    //                            viewModel.boardSize,
-                    //                            2
-                    //
-                    //                        )
-                    //                    )
+                    navigator.replaceAll(MultiplayerScreen(viewModel.boardSize, 2))
+
                 } else {
                     AskQuestionDialog(
                         question =
                         Res.string.how_many_players,
                         btn1Click = {
                             viewModel.gameReady()
-                            //                            navigator.navigate(
-                            //                                MultiPlayerScreenDestination(
-                            //                                    viewModel.boardSize,
-                            //                                    2
-                            //
-                            //                                )
-                            //                            )
+                            navigator.replaceAll(MultiplayerScreen(viewModel.boardSize, 2))
+
                         },
                         btn2Click = {
                             viewModel.gameReady()
-                            //                            navigator.navigate(
-                            //                                MultiPlayerScreenDestination(
-                            //                                    viewModel.boardSize,
-                            //                                    3
-                            //
-                            //
-                            //                                )
-                            //                            )
+                            navigator.replaceAll(MultiplayerScreen(viewModel.boardSize, 3))
+
                         },
                         btn3Click = if (viewModel.selectedTypeModeGame.id != 3) {
                             null
                         } else {
                             {
                                 viewModel.gameReady()
-                                //                                navigator.navigate(
-                                //                                    MultiPlayerScreenDestination(
-                                //                                        viewModel.boardSize,
-                                //                                        4
-                                //
-                                //                                    )
-                                //                                )
+
+                                navigator.replaceAll(MultiplayerScreen(viewModel.boardSize, 4))
+
                             }
                         },
                         btn1Text = Res.string.num2,
