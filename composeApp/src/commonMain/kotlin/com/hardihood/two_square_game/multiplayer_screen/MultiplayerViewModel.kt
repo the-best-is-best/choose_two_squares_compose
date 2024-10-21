@@ -15,6 +15,7 @@ import com.hardihood.two_square_game.core.main.domain.use_case.LogoutRoomUseCase
 import com.hardihood.two_square_game.core.main.domain.use_case.PlayGameUseCase
 import com.hardihood.two_square_game.main.domain.request.LogoutRoomRequest
 import com.hardihood.two_square_game.main.domain.request.PlayRoomRequest
+
 import io.github.firebase_database.KFirebaseDatabase
 import io.github.handleerrorapi.Failure
 import kotlinx.coroutines.launch
@@ -48,6 +49,8 @@ class MultiplayerViewModel(
 
 
     var myDatabase = KFirebaseDatabase()
+
+    private var currentDatabase: Map<*, *>? = null
 
     //   var canBack by mutableStateOf(false)
 
@@ -142,35 +145,39 @@ class MultiplayerViewModel(
     }
 
     private fun addListener() {
+
+
         myDatabase.addObserveListener(idRoom!!.toString()) {
             it.onSuccess {
-                println("listen to $it")
                 val value = if (it is Map<*, *>) it else null
-                if (value != null) {
-                    if (value["message"] == "joined") {
-                        playerJoined()
-                    } else if (value["message"] == "player win" || value["message"] == "Player Win") {
-                        endGame(value["currentPlayer"].toString().toInt())
-                    } else if (value["message"] == "player lost") {
-                        lostPlayer(value["currentPlayer"].toString().toInt())
-                    } else if (value["message"] == "No One Win The Game") {
-                        endGame(0)
-                    } else if (value["message"] == "Get Data Player") {
-                        if (value["currentPlayer"] != turn) {
+                if (currentDatabase != value) {
+                    currentDatabase = value
+                    if (value != null) {
+                        if (value["message"] == "joined") {
+                            playerJoined()
+                        } else if (value["message"] == "player win" || value["message"] == "Player Win") {
+                            endGame(value["currentPlayer"].toString().toInt())
+                        } else if (value["message"] == "player lost") {
+                            lostPlayer(value["currentPlayer"].toString().toInt())
+                        } else if (value["message"] == "No One Win The Game") {
+                            endGame(0)
+                        } else if (value["message"] == "Get Data Player") {
+                            if (value["currentPlayer"] != turn) {
 
-                            getBoard(value["nextTurn"].toString().toInt())
+                                getBoard(value["nextTurn"].toString().toInt())
+                            }
+                        } else if (value["message"] == "Start Time") {
+                            timeStart = 30
+                            startTimer()
+                        } else if (value["message"].toString() == "room issue") {
+                            roomIssue()
+                        } else {
+                            println("firebase got nothing ${value["message"]}")
                         }
-                    } else if (value["message"] == "Start Time") {
-                        timeStart = 30
-                        startTimer()
-                    } else if (value["message"].toString() == "room issue") {
-                        roomIssue()
-                    } else {
-                        println("firebase got nothing ${value["message"]}")
+
                     }
 
                 }
-
             }
             it.onFailure {
                 println("listen failed $idRoom")
@@ -212,7 +219,7 @@ class MultiplayerViewModel(
 
                     when (it.message) {
                         "No One Win The Game" -> {
-                            _getBoardLocal(number1, number2)
+                            getBoardLocal(number1, number2)
                             timeStart = -1
                             val roomData =
                                 mapOf("message" to "No One Win The Game", "currentPlayer" to player)
@@ -223,7 +230,7 @@ class MultiplayerViewModel(
                         }
 
                         "Next Player" -> {
-                            _getBoardLocal(number1, number2)
+                            getBoardLocal(number1, number2)
                             var nextTurn: Int = player
                             if (nextTurn == numberOfPlayer) {
                                 nextTurn = 1
@@ -293,7 +300,7 @@ class MultiplayerViewModel(
     }
 
 
-    private fun _getBoardLocal(number1: Int, number2: Int) {
+    private fun getBoardLocal(number1: Int, number2: Int) {
         board[number1 - 1] = "-1"
         board[number2 - 1] = "-1"
     }
@@ -368,6 +375,7 @@ class MultiplayerViewModel(
             screenModelScope.launch {
                 deleteRoomUseCase.invoke(idRoom!!)
             }
+
             myDatabase.removeObserver(idRoom!!.toString())
         }
     }

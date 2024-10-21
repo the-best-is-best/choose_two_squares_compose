@@ -1,4 +1,4 @@
-rootProject.name = "Choose-two-squares"
+rootProject.name = "choose-two-squares"
 
 pluginManagement {
     repositories {

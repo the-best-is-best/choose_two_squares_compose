@@ -1,6 +1,5 @@
 package com.hardihood.two_square_game.privacy_screen
 
-import Choose_two_squares.composeApp.BuildConfig
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import choose_two_squares.composeApp.BuildConfig
 import choose_two_squares.composeapp.generated.resources.Res
 import choose_two_squares.composeapp.generated.resources.privacy_policy
 import com.hardihood.two_square_game.components.MyText

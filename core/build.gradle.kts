@@ -40,6 +40,7 @@ kotlin {
             implementation(libs.ktor.client.serialization.json)
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
+            implementation(libs.slf4j.simple)
 
         }
 
@@ -111,5 +112,19 @@ dependencies {
 buildConfig {
     // BuildConfig configuration here.
     // https://github.com/gmazzo/gradle-buildconfig-plugin#usage-in-kts
+
+    buildConfigField(
+        "String",
+        "DOMAIN",
+        "\"https://mesho.linkie.tech\""
+    )
+
+    buildConfigField(
+        "String",
+        "PATH",
+        "\"two_square_game\""
+    )
+
+
 
 }

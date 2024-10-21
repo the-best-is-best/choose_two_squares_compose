@@ -1,7 +1,6 @@
 package com.hardihood.two_square_game.core.services
 
-import Choose_two_squares.composeApp.AndroidMainBuildConfig
-import Choose_two_squares.composeApp.BuildConfig
+import choose_two_squares.composeApp.AndroidMainBuildConfig
 import io.github.kadmob.KAdmobInterstitialAd
 
 actual object AdServices {
