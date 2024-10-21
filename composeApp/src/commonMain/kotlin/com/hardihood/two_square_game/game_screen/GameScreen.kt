@@ -27,7 +27,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -39,7 +38,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.koin.koinNavigatorScreenModel
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -57,7 +55,6 @@ import com.hardihood.two_square_game.core.AppColors
 import com.hardihood.two_square_game.core.FontFamilies
 import com.hardihood.two_square_game.core.services.AdServices
 import com.hardihood.two_square_game.home_screen.HomeScreen
-import com.hardihood.two_square_game.home_screen.HomeViewModel
 import io.github.kadmob.model.KAdmobBannerType
 import io.github.kadmob.views.KBannerAd
 import io.github.tbib.compose_toast.AdvToast
@@ -258,7 +255,8 @@ data class GameScreen(val numOfPlayer: Int, val withFriend: Boolean, val sendBoa
                     }
                     Spacer(modifier = Modifier.weight(1f))
                     KBannerAd(
-                        modifier = Modifier.fillMaxWidth().height(100.dp),
+                        modifier = Modifier.width(350.dp).height(50.dp)
+                            .background(Color.Transparent).align(Alignment.CenterHorizontally),
                         adUnitId = AdServices.bannerId,
                         type = KAdmobBannerType.BANNER
                     )

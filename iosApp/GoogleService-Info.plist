@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>407762021871-c4lrqb4pob150qs0gmk9rjah4lskj41s.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.407762021871-c4lrqb4pob150qs0gmk9rjah4lskj41s</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>407762021871-hgsht6200g55lddk1frcefdrqb48032k.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCEcHThg4PZO7Dzi_pm-mm3H8_KrcrPL7k</string>
+	<key>GCM_SENDER_ID</key>
+	<string>407762021871</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.hardihood.twoSquareGame</string>
+	<key>PROJECT_ID</key>
+	<string>choose-two-squares-95959</string>
+	<key>STORAGE_BUCKET</key>
+	<string>choose-two-squares-95959.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:407762021871:ios:88cbeacb68f3ad92469a1a</string>
+	<key>DATABASE_URL</key>
+	<string>https://choose-two-squares-95959-default-rtdb.europe-west1.firebasedatabase.app</string>
+	<key>ADMOB_APP_ID</key>
+	<string>ca-app-pub-7284367511062855~6471864726</string>
+</dict>
+</plist>

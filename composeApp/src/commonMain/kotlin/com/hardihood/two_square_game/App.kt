@@ -30,15 +30,7 @@ internal fun App() = AppTheme(useDarkTheme = false) {
     val focusManager = LocalFocusManager.current
 
     Surface(
-        modifier = Modifier.fillMaxSize()
-            .windowInsetsPadding(WindowInsets.systemBars)
-            .pointerInput(Unit) {
-                detectTapGestures(onTap = {
-                    focusManager.clearFocus()
-                })
-            }
-            .navigationBarsPadding()
-            .imePadding(),
+
         color = AppColors.mainColor,
     ) {
         MaterialTheme(
@@ -46,9 +38,16 @@ internal fun App() = AppTheme(useDarkTheme = false) {
         ) {
             CompositionLocalProvider {
 
-            Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
+                Column(
+                    modifier = Modifier.fillMaxSize()
+                        .windowInsetsPadding(WindowInsets.systemBars)
+                        .pointerInput(Unit) {
+                            detectTapGestures(onTap = {
+                                focusManager.clearFocus()
+                            })
+                        }
+                        .navigationBarsPadding()
+                        .imePadding(), verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Column(

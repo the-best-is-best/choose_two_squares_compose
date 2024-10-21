@@ -91,9 +91,7 @@ data class MultiplayerScreen(
 
                             }
                         }
-                        if (event is LifecycleEvent.OnCreateEvent) {
-                            //   viewModel.resetGame()
-                        }
+
                         if (event is LifecycleEvent.OnPauseEvent) {
                             if (viewModel.idRoom != null) {
                                 viewModel.logout()
@@ -415,7 +413,8 @@ data class MultiplayerScreen(
                     }
                     Spacer(modifier = Modifier.weight(1f))
                     KBannerAd(
-                        modifier = Modifier.fillMaxWidth().height(100.dp),
+                        modifier = Modifier.width(350.dp).height(50.dp)
+                            .background(Color.Transparent).align(Alignment.CenterHorizontally),
                         adUnitId = AdServices.bannerId,
                         type = KAdmobBannerType.BANNER
                     )
