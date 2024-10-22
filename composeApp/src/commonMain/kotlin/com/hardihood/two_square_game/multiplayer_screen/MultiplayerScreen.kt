@@ -35,10 +35,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -59,9 +63,6 @@ import com.hardihood.two_square_game.core.FontFamilies
 import com.hardihood.two_square_game.core.services.AdServices
 import com.hardihood.two_square_game.home_screen.HomeScreen
 import com.hardihood.two_square_game.multiplayer_screen.component.CountdownTimer
-import com.multiplatform.lifecycle.LifecycleEvent
-import com.multiplatform.lifecycle.LifecycleObserver
-import com.multiplatform.lifecycle.LocalLifecycleTracker
 import io.github.kadmob.model.KAdmobBannerType
 import io.github.kadmob.views.KBannerAd
 import io.github.tbib.compose_toast.AdvToast
@@ -76,38 +77,30 @@ data class MultiplayerScreen(
 ) : Screen {
     @Composable
     override fun Content() {
-        val lifecycleTracker = LocalLifecycleTracker.current
+        val lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
         val navigator = LocalNavigator.currentOrThrow
 
         val viewModel: MultiplayerViewModel = koinScreenModel()
-        DisposableEffect(Unit) {
-            val listener =
-                object : LifecycleObserver {
-                    override fun onEvent(event: LifecycleEvent) {
-                        println("Lifecycle: onEvent: $event")
-                        if (event is LifecycleEvent.OnStopEvent) {
-                            if (viewModel.idRoom != null) {
-                                viewModel.logout()
+        DisposableEffect(lifecycleOwner) {
+            val observer = LifecycleEventObserver { _, event ->
+                when (event) {
+                    Lifecycle.Event.ON_STOP, Lifecycle.Event.ON_PAUSE -> {
+                        if (viewModel.idRoom != null) {
+                            viewModel.logout()
 
-                            }
                         }
 
-                        if (event is LifecycleEvent.OnPauseEvent) {
-                            if (viewModel.idRoom != null) {
-                                viewModel.logout()
+                    }
 
-                            }
-                        }
-//                        if(event is LifecycleEvent.OnDestroyEvent){
-//                            viewModel.resetGame()
-//
-//                        }
+                    else -> {
 
                     }
                 }
-            lifecycleTracker.addObserver(listener)
+            }
+
+            lifecycleOwner.lifecycle.addObserver(observer)
             onDispose {
-                lifecycleTracker.removeObserver(listener)
+                lifecycleOwner.lifecycle.removeObserver(observer)
             }
         }
         var gameStart by remember { mutableStateOf(false) }
@@ -165,7 +158,7 @@ data class MultiplayerScreen(
             }
             ShowDialog(message = stringResource(Res.string.room_error), onClick = {
                 coroutineScope.launch {
-                    viewModel.myDatabase.removeObserver(viewModel.idRoom!!.toString())
+                    viewModel.disconnectListener()
                 }
                 navigator.replaceAll(HomeScreen())
 
@@ -181,10 +174,11 @@ data class MultiplayerScreen(
                 navigator.replaceAll(HomeScreen())
 
             } else {
-                AdServices.showInterstitialAd()
 
                 val info = if (viewModel.playerLost == null
                 ) {
+                    AdServices.showInterstitialAd()
+
                     if (viewModel.playerWin == 0
                     ) "No One Win The Game"
                     else if (viewModel.playerWin == null || viewModel.playerWin == -1
@@ -199,8 +193,7 @@ data class MultiplayerScreen(
                     else "You Lose The Game"
                 }
                 ShowDialog(message = info, onClick = {
-                    viewModel.myDatabase.removeObserver(viewModel.idRoom!!.toString())
-
+                    viewModel.disconnectListener()
                     navigator.replaceAll(HomeScreen())
                 })
             }
@@ -209,7 +202,7 @@ data class MultiplayerScreen(
 
             ShowDialog(message = stringResource(Res.string.room_error), onClick = {
                 coroutineScope.launch {
-                    viewModel.myDatabase.removeObserver(viewModel.idRoom!!.toString())
+                    viewModel.disconnectListener()
                 }
                 navigator.replaceAll(HomeScreen())
 
@@ -219,7 +212,7 @@ data class MultiplayerScreen(
 
             ShowDialog(message = stringResource(Res.string.game_draw), onClick = {
                 coroutineScope.launch {
-                    viewModel.myDatabase.removeObserver(viewModel.idRoom!!.toString())
+                    viewModel.disconnectListener()
                 }
                 navigator.replaceAll(HomeScreen())
             })
@@ -230,7 +223,7 @@ data class MultiplayerScreen(
                     message = state.value.errorMessage!!.messages
                         ?: stringResource(Res.string.serverError), onClick = {
                         coroutineScope.launch {
-                            viewModel.myDatabase.removeObserver(viewModel.idRoom!!.toString())
+                            viewModel.disconnectListener()
                         }
                         navigator.replaceAll(HomeScreen())
                     })

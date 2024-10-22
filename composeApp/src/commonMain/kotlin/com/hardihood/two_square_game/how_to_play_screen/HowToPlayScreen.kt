@@ -1,7 +1,6 @@
 package com.hardihood.two_square_game.how_to_play_screen
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -34,13 +33,16 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import chaintech.videoplayer.model.PlayerConfig
+import chaintech.videoplayer.ui.youtube.YouTubePlayerView
 import choose_two_squares.composeapp.generated.resources.Res
 import choose_two_squares.composeapp.generated.resources.how_to_play_text
 import choose_two_squares.composeapp.generated.resources.how_to_play_title
 import com.hardihood.two_square_game.components.MyText
 import com.hardihood.two_square_game.components.MyTextAttribute
 import com.hardihood.two_square_game.core.AppColors
-import io.github.the_best_is_best.kyoutube.KYoutube
+
+//import io.github.the_best_is_best.kyoutube.KYoutube
 
 class HowToPlayScreen : Screen {
     @Composable
@@ -88,14 +90,16 @@ class HowToPlayScreen : Screen {
                     with(density) { (componentSize.height * .25f).toDp() } // Calculate 50% of the parent height
 
                 item {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clip(RoundedCornerShape(10.dp))
-                            .height(youtubeHeight) // Set a fixed height for the video player
-                    ) {
-                        KYoutube("51tBJRncZnI")
-                    }
+                    YouTubePlayerView(
+                        modifier = Modifier.fillMaxWidth().height(youtubeHeight)
+                            .clip(RoundedCornerShape(10.dp)),
+                        videoId = "51tBJRncZnI",
+                        playerConfig = PlayerConfig(
+                            topControlSize = 0.dp
+                        )
+                    )
+
+
 
                     Spacer(modifier = Modifier.height(10.dp))
 

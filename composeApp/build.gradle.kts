@@ -69,6 +69,7 @@ kotlin {
             implementation(libs.voyager.screenmodel)
             implementation(libs.voyager.koin)
 
+
             implementation(libs.compottie)
             implementation(libs.composesearchabledropdown)
             implementation(libs.kadmob)
@@ -78,15 +79,19 @@ kotlin {
             implementation(libs.compose.webview.multiplatform)
 
             implementation(compose.materialIconsExtended)
-            implementation(libs.kyoutube)
+//            implementation(libs.kyoutube)
+            implementation("network.chaintech:compose-multiplatform-media-player:1.0.24")
+
             implementation(libs.compose.toast)
 
             implementation(libs.kfirebase.core)
             implementation(libs.kfirebase.analytics)
             implementation(libs.kfirebase.crashlytics)
-            implementation(libs.kfirebase.database)
+//            implementation(libs.kfirebase.database)
+            implementation("dev.gitlive:firebase-database:2.1.0")
 
-            api(libs.compose.multiplatform.lifecycle.tracker)
+            // api(libs.compose.multiplatform.lifecycle.tracker)
+            implementation(libs.lifecycle.compose)
 
 
 
@@ -104,7 +109,7 @@ kotlin {
             implementation(libs.androidx.activityCompose)
             implementation(libs.kotlinx.coroutines.android)
 
-            implementation(libs.androidx.lifecycle.runtime.ktx)
+            //  implementation(libs.androidx.lifecycle.runtime.ktx)
 
 //            implementation(libs.ktor.client.okhttp)
         }
@@ -186,7 +191,7 @@ buildConfig {
     buildConfigField(
         "String",
         "PRIVACY_URL",
-        "\"http://michelleacademy.getenjoyment.net/two_square_game/privacy_policy/privacy_policy.html\""
+        "\"https://mesho.linkie.tech/two_square_game/privacy_policy/privacy_policy.html\""
     )
 
     sourceSets {

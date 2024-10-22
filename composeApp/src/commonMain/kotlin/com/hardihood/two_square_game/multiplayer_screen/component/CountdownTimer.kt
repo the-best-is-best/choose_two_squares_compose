@@ -8,14 +8,15 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
 import com.hardihood.two_square_game.core.FontFamilies
 import com.hardihood.two_square_game.multiplayer_screen.MultiplayerViewModel
-import com.multiplatform.lifecycle.LifecycleEvent
-import com.multiplatform.lifecycle.LifecycleObserver
-import com.multiplatform.lifecycle.LocalLifecycleTracker
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -23,37 +24,35 @@ import kotlinx.coroutines.launch
 fun CountdownTimer(
     multiplayerViewModel: MultiplayerViewModel,
 ) {
-    val lifecycleTracker = LocalLifecycleTracker.current
+    val lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
     val coroutineScope = rememberCoroutineScope()
 
-    DisposableEffect(Unit) {
-        val listener =
-            object : LifecycleObserver {
-                override fun onEvent(event: LifecycleEvent) {
-                    println("Lifecycle: onEvent: $event")
-                    if (event is LifecycleEvent.OnStartEvent) {
-                        coroutineScope.launch {
-                            while (multiplayerViewModel.timeStart > 0L) {
-                                delay(1000L) // Update every second
-                                multiplayerViewModel.timeStart -= 1L
-                                if (multiplayerViewModel.timeStart <= 0L) { //
-                                    // Handle countdown reaching 0 or below
-                                    multiplayerViewModel.timeOut()
-                                }
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            when (event) {
+                Lifecycle.Event.ON_START -> {
+
+                    coroutineScope.launch {
+                        while (multiplayerViewModel.timeStart > 0L) {
+                            delay(1000L) // Update every second
+                            multiplayerViewModel.timeStart -= 1L
+                            if (multiplayerViewModel.timeStart <= 0L) { //
+                                // Handle countdown reaching 0 or below
+                                multiplayerViewModel.timeOut()
                             }
                         }
                     }
 
-//                        if(event is LifecycleEvent.OnDestroyEvent){
-//                            viewModel.resetGame()
-//
-//                        }
-
                 }
+
+                else -> {}
             }
-        lifecycleTracker.addObserver(listener)
+        }
+
+
+        lifecycleOwner.lifecycle.addObserver(observer)
         onDispose {
-            lifecycleTracker.removeObserver(listener)
+            lifecycleOwner.lifecycle.removeObserver(observer)
         }
     }
 

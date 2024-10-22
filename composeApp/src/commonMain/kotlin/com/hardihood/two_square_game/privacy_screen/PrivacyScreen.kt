@@ -29,6 +29,7 @@ import com.hardihood.two_square_game.components.MyText
 import com.hardihood.two_square_game.components.MyTextAttribute
 import com.hardihood.two_square_game.core.AppColors
 import com.multiplatform.webview.web.WebView
+import com.multiplatform.webview.web.rememberWebViewNavigator
 import com.multiplatform.webview.web.rememberWebViewState
 
 class PrivacyScreen : Screen {
@@ -36,6 +37,7 @@ class PrivacyScreen : Screen {
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
         val privacyUrl = rememberWebViewState(url = BuildConfig.PRIVACY_URL)
+        val navigateWebView = rememberWebViewNavigator()
 
         Column(
             modifier = Modifier.fillMaxSize()
@@ -69,7 +71,12 @@ class PrivacyScreen : Screen {
                     )
                 )
             }
-            WebView(privacyUrl)
+            WebView(
+                modifier = Modifier.fillMaxSize(),
+                navigator = navigateWebView,
+                state = privacyUrl,
+                captureBackPresses = false
+            )
 
         }
     }
