@@ -2,11 +2,12 @@
 
 compose_toast = "1.0.1"
 composeMultiplatformLifecycleTracker = "1.0.0"
+composeMultiplatformMediaPlayer = "1.0.24"
 composesearchabledropdown = "2.0.8"
 composeWebviewMultiplatform = "1.9.40-alpha03"
 compottie = "2.0.0-rc01"
-kadmob = "1.0.0-rc2"
-kfirebaseCore = "1.0.0-rc3"
+kadmob = "1.0.0"
+kfirebaseCore = "1.0.0-rc4"
 kotlin = "2.0.21"
 compose = "1.7.0"
 agp = "8.7.1"
@@ -33,6 +34,7 @@ androidx-activityCompose = { module = "androidx.activity:activity-compose", vers
 androidx-uitest-testManifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "androidx-uiTest" }
 androidx-uitest-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "androidx-uiTest" }
 compose-multiplatform-lifecycle-tracker = { module = "io.github.kevinnzou:compose-multiplatform-lifecycle-tracker", version.ref = "composeMultiplatformLifecycleTracker" }
+compose-multiplatform-media-player = { module = "network.chaintech:compose-multiplatform-media-player", version.ref = "composeMultiplatformMediaPlayer" }
 compose-webview-multiplatform = { module = "io.github.kevinnzou:compose-webview-multiplatform", version.ref = "composeWebviewMultiplatform" }
 compose_toast = { module = "io.github.the-best-is-best:compose_toast", version.ref = "compose_toast" }
 composesearchabledropdown = { module = "io.github.the-best-is-best:ComposeSearchableDropdown", version.ref = "composesearchabledropdown" }
@@ -44,7 +46,7 @@ kfirebase-core = { module = "io.github.the-best-is-best:kfirebase-core", version
 kfirebase-crashlytics = { module = "io.github.the-best-is-best:kfirebase-crashlytics", version.ref = "kfirebaseCore" }
 kfirebase-database = { module = "io.github.the-best-is-best:kfirebase-database", version.ref = "kfirebaseCore" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleViewmodelCompose" }
+lifecycle-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleViewmodelCompose" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }

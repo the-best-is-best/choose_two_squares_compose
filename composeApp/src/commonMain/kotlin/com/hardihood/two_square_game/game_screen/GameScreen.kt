@@ -257,7 +257,7 @@ data class GameScreen(val numOfPlayer: Int, val withFriend: Boolean, val sendBoa
                     KBannerAd(
                         modifier = Modifier.width(350.dp).height(50.dp)
                             .background(Color.Transparent).align(Alignment.CenterHorizontally),
-                        adUnitId = AdServices.bannerId,
+                        adBannerUnitId = AdServices.bannerId,
                         type = KAdmobBannerType.BANNER
                     )
 

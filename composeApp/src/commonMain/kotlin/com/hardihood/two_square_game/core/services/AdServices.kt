@@ -6,6 +6,7 @@ expect object AdServices {
     var interstitialAd: KAdmobInterstitialAd
     var bannerId: String
 
+    fun loadInterstitialAd()
     fun showInterstitialAd()
 
 }

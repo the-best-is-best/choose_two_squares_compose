@@ -6,13 +6,15 @@ import io.github.kadmob.KAdmobInterstitialAd
 actual object AdServices {
     actual var interstitialAd: KAdmobInterstitialAd = KAdmobInterstitialAd()
 
-    init {
-        interstitialAd.loadInterstitialAd(IosMainBuildConfig.interstitialAd)
-    }
+
 
     actual fun showInterstitialAd() {
         interstitialAd.showInterstitialAd()
     }
 
     actual var bannerId: String = IosMainBuildConfig.bannerAd
+    actual fun loadInterstitialAd() {
+        interstitialAd.loadInterstitialAd(IosMainBuildConfig.interstitialAd)
+    }
+
 }

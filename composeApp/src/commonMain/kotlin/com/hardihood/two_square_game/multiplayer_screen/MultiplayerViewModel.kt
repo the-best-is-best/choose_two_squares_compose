@@ -15,8 +15,7 @@ import com.hardihood.two_square_game.core.main.domain.use_case.LogoutRoomUseCase
 import com.hardihood.two_square_game.core.main.domain.use_case.PlayGameUseCase
 import com.hardihood.two_square_game.main.domain.request.LogoutRoomRequest
 import com.hardihood.two_square_game.main.domain.request.PlayRoomRequest
-import dev.gitlive.firebase.Firebase
-import dev.gitlive.firebase.database.database
+import io.github.firebase_database.KFirebaseDatabase
 
 //import io.github.firebase_database.KFirebaseDatabase
 import io.github.handleerrorapi.Failure
@@ -50,7 +49,7 @@ class MultiplayerViewModel(
     var timeStart by mutableLongStateOf(30L)
 
 
-    var myDatabase = Firebase.database.reference()
+    var myDatabase = KFirebaseDatabase()
 
     private var currentDatabase: Map<*, *>? = null
 
@@ -114,40 +113,16 @@ class MultiplayerViewModel(
 
             if (messageApi == "Join Room") {
                 val roomData = mapOf("message" to "joined", "currentPlayer" to player)
-                myDatabase.child(idRoom!!.toString()).setValue(roomData)
-//                myDatabase.write(idRoom!!.toString(), roomData) {
-//                    it.onSuccess {
-//                        println("joined room")
-//                    }
-//                    it.onFailure {
-//                        println("join failed")
-//                    }
-//                }
+//                myDatabase.child(idRoom!!.toString()).setValue(roomData)
+                myDatabase.write(idRoom!!.toString(), roomData)
                 playerJoined()
 
             } else {
                 println("start delete room")
-                myDatabase.child(idRoom!!.toString()).removeValue()
-//                myDatabase.delete(idRoom!!.toString()) {
-//                    it.onSuccess {
-//
-//
-//                        println("delete room from database")
-//                    }
-//                    it.onFailure {
-//                        println("delete room from database firebase issue")
-//                    }
-//                }
-                myDatabase.child(idRoom!!.toString()).setValue(mapOf("created" to 1))
+//                myDatabase.child(idRoom!!.toString()).removeValue()
+                myDatabase.delete(idRoom!!.toString())
+//                myDatabase.child(idRoom!!.toString()).setValue(mapOf("created" to 1))
                 addListener()
-//                myDatabase.write(idRoom!!.toString(), mapOf("start" to 1)) {
-//                    it.onFailure { println("data write error $it")
-//                    }
-//                    it.onSuccess { println("data write $it")
-//                        addListener()
-//
-//                    }
-//                }
             }
         }
     }
@@ -160,51 +135,14 @@ class MultiplayerViewModel(
     }
 
     private fun addListener() {
-        screenModelScope.launch {
-            myDatabase.child(idRoom!!.toString()).valueEvents.collect { collector ->
-                val valueAny = collector.value
-                val value = if (valueAny is Map<*, *>) valueAny else null
-                if (currentDatabase != value) {
-                    currentDatabase = value
-                    println("new data value $value")
-
-                    if (value != null) {
-                        if (value["message"] == "joined") {
-                            playerJoined()
-                        } else if (value["message"] == "player win" || value["message"] == "Player Win") {
-                            endGame(value["currentPlayer"].toString().toInt())
-                        } else if (value["message"] == "player lost") {
-                            lostPlayer(value["currentPlayer"].toString().toInt())
-                        } else if (value["message"] == "No One Win The Game") {
-                            endGame(0)
-                        } else if (value["message"] == "Get Data Player") {
-                            if (value["currentPlayer"] != turn) {
-
-                                getBoard(value["nextTurn"].toString().toInt())
-                            }
-                        } else if (value["message"] == "Start Time") {
-                            timeStart = 30
-                            startTimer()
-                        } else if (value["message"].toString() == "room issue") {
-                            roomIssue()
-                        } else {
-                            println("firebase got nothing ${value["message"]}")
-                        }
-
-                    }
-
-                }
-            }
-
-        }
-    }
-//        myDatabase.addObserveListener(idRoom!!.toString()) {
-//            it.onSuccess {
-//                val value = if (it is Map<*, *>) it else null
-//                println("new data value $value")
-//
+//        screenModelScope.launch {
+//            myDatabase.child(idRoom!!.toString()).valueEvents.collect { collector ->
+//                val valueAny = collector.value
+//                val value = if (valueAny is Map<*, *>) valueAny else null
 //                if (currentDatabase != value) {
 //                    currentDatabase = value
+//                    println("new data value $value")
+//
 //                    if (value != null) {
 //                        if (value["message"] == "joined") {
 //                            playerJoined()
@@ -232,12 +170,50 @@ class MultiplayerViewModel(
 //
 //                }
 //            }
-//            it.onFailure {
-//                println("listen failed $idRoom")
-//            }
+//
 //        }
-    // }
+//    }
+        screenModelScope.launch {
+            myDatabase.addObserveValueListener(idRoom!!.toString()).collect { res ->
+                res.onSuccess {
+                    val value = if (it is Map<*, *>) it else null
+                    println("new data value $value")
 
+                    if (currentDatabase != value) {
+                        currentDatabase = value
+                        if (value != null) {
+                            if (value["message"] == "joined") {
+                                playerJoined()
+                            } else if (value["message"] == "player win" || value["message"] == "Player Win") {
+                                endGame(value["currentPlayer"].toString().toInt())
+                            } else if (value["message"] == "player lost") {
+                                lostPlayer(value["currentPlayer"].toString().toInt())
+                            } else if (value["message"] == "No One Win The Game") {
+                                endGame(0)
+                            } else if (value["message"] == "Get Data Player") {
+                                if (value["currentPlayer"] != turn) {
+
+                                    getBoard(value["nextTurn"].toString().toInt())
+                                }
+                            } else if (value["message"] == "Start Time") {
+                                timeStart = 30
+                                startTimer()
+                            } else if (value["message"].toString() == "room issue") {
+                                roomIssue()
+                            } else {
+                                println("firebase got nothing ${value["message"]}")
+                            }
+
+                        }
+
+                    }
+                }
+                res.onFailure {
+                    println("listen failed $idRoom")
+                }
+            }
+        }
+    }
     fun selectNumbers(number: Int) {
         if (number1 == null) {
             number1 = number
@@ -428,7 +404,6 @@ class MultiplayerViewModel(
                 deleteRoomUseCase.invoke(idRoom!!)
             }
 
-            disconnectListener()
         }
     }
 
@@ -460,14 +435,13 @@ class MultiplayerViewModel(
                         val roomData = mapOf("message" to "player lost", "currentPlayer" to player)
                         updateRoom(roomData)
 
-                        disconnectListener()
                         endGame = true
 
 
                     } else if (gameStarted && roomError) {
                         val roomData = mapOf("message" to "Room issue", "currentPlayer" to player)
                         updateRoom(roomData)
-                        disconnectListener()
+
 
                     }
                 }
@@ -483,10 +457,7 @@ class MultiplayerViewModel(
         }
     }
 
-    fun disconnectListener() {
-        myDatabase.child(idRoom!!.toString()).onDisconnect()
 
-    }
 
     private fun endGame(player: Int) {
         playerWin = player
@@ -526,16 +497,17 @@ class MultiplayerViewModel(
 
     private fun updateRoom(roomData: Map<String, Any>) {
         screenModelScope.launch {
-            myDatabase.child(idRoom!!.toString()).updateChildren(roomData)
+//            myDatabase.child(idRoom!!.toString()).updateChildren(roomData)
+            // }
+            val res = myDatabase.update(idRoom!!.toString(), roomData)
+            res.onSuccess {
+                println("update room $idRoom")
+            }
+            res.onFailure {
+                println("update room failed $idRoom")
+            }
         }
-//        myDatabase.update(idRoom!!.toString(), roomData) {
-//            it.onSuccess {
-//                println("update room $idRoom")
-//            }
-//            it.onFailure {
-//                println("update room failed $idRoom")
-//            }
-//        }
     }
+
 }
 

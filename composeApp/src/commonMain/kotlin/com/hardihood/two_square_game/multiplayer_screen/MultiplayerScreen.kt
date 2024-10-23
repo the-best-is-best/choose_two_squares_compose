@@ -35,7 +35,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -77,7 +76,7 @@ data class MultiplayerScreen(
 ) : Screen {
     @Composable
     override fun Content() {
-        val lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
+        val lifecycleOwner: LifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
         val navigator = LocalNavigator.currentOrThrow
 
         val viewModel: MultiplayerViewModel = koinScreenModel()
@@ -157,9 +156,7 @@ data class MultiplayerScreen(
                 viewModel.deleteRoom()
             }
             ShowDialog(message = stringResource(Res.string.room_error), onClick = {
-                coroutineScope.launch {
-                    viewModel.disconnectListener()
-                }
+
                 navigator.replaceAll(HomeScreen())
 
 
@@ -193,28 +190,24 @@ data class MultiplayerScreen(
                     else "You Lose The Game"
                 }
                 ShowDialog(message = info, onClick = {
-                    viewModel.disconnectListener()
-                    navigator.replaceAll(HomeScreen())
+
+                navigator.replaceAll(HomeScreen())
                 })
             }
         } else if (viewModel.roomError) {
             AdServices.showInterstitialAd()
 
             ShowDialog(message = stringResource(Res.string.room_error), onClick = {
-                coroutineScope.launch {
-                    viewModel.disconnectListener()
-                }
-                navigator.replaceAll(HomeScreen())
+
+            navigator.replaceAll(HomeScreen())
 
             })
         } else if (viewModel.gameDraw) {
             AdServices.showInterstitialAd()
 
             ShowDialog(message = stringResource(Res.string.game_draw), onClick = {
-                coroutineScope.launch {
-                    viewModel.disconnectListener()
-                }
-                navigator.replaceAll(HomeScreen())
+
+            navigator.replaceAll(HomeScreen())
             })
 
         } else {
@@ -222,10 +215,8 @@ data class MultiplayerScreen(
                 ShowDialog(
                     message = state.value.errorMessage!!.messages
                         ?: stringResource(Res.string.serverError), onClick = {
-                        coroutineScope.launch {
-                            viewModel.disconnectListener()
-                        }
-                        navigator.replaceAll(HomeScreen())
+
+                    navigator.replaceAll(HomeScreen())
                     })
             }
         }
@@ -408,7 +399,7 @@ data class MultiplayerScreen(
                     KBannerAd(
                         modifier = Modifier.width(350.dp).height(50.dp)
                             .background(Color.Transparent).align(Alignment.CenterHorizontally),
-                        adUnitId = AdServices.bannerId,
+                        adBannerUnitId = AdServices.bannerId,
                         type = KAdmobBannerType.BANNER
                     )
 

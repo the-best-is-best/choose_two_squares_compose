@@ -8,7 +8,6 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -24,7 +23,7 @@ import kotlinx.coroutines.launch
 fun CountdownTimer(
     multiplayerViewModel: MultiplayerViewModel,
 ) {
-    val lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
+    val lifecycleOwner: LifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
     val coroutineScope = rememberCoroutineScope()
 
     DisposableEffect(lifecycleOwner) {

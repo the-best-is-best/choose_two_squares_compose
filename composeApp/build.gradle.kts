@@ -80,15 +80,15 @@ kotlin {
 
             implementation(compose.materialIconsExtended)
 //            implementation(libs.kyoutube)
-            implementation("network.chaintech:compose-multiplatform-media-player:1.0.24")
+            implementation(libs.compose.multiplatform.media.player)
 
             implementation(libs.compose.toast)
 
             implementation(libs.kfirebase.core)
             implementation(libs.kfirebase.analytics)
             implementation(libs.kfirebase.crashlytics)
-//            implementation(libs.kfirebase.database)
-            implementation("dev.gitlive:firebase-database:2.1.0")
+            implementation(libs.kfirebase.database)
+//            implementation("dev.gitlive:firebase-database:2.1.0")
 
             // api(libs.compose.multiplatform.lifecycle.tracker)
             implementation(libs.lifecycle.compose)

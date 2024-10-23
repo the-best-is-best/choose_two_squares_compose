@@ -49,6 +49,7 @@ import com.hardihood.two_square_game.components.MyText
 import com.hardihood.two_square_game.components.MyTextAttribute
 import com.hardihood.two_square_game.core.AppColors
 import com.hardihood.two_square_game.core.FontFamilies
+import com.hardihood.two_square_game.core.services.AdServices
 import com.hardihood.two_square_game.game_screen.GameScreen
 import com.hardihood.two_square_game.home_screen.components.HomeAppBar
 import com.hardihood.two_square_game.how_to_play_screen.HowToPlayScreen
@@ -140,6 +141,7 @@ class HomeScreen : Screen {
                             ),
                             contentPadding = PaddingValues(),
                             onClick = {
+                                AdServices.loadInterstitialAd()
                                 viewModel.playOffline()
 
 
@@ -165,6 +167,7 @@ class HomeScreen : Screen {
                                 containerColor = AppColors.secondColor
                             ),
                             onClick = {
+                                AdServices.loadInterstitialAd()
                                 viewModel.playOnline()
                             }) {
                             MyText(
