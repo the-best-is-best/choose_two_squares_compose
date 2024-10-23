@@ -134,12 +134,8 @@ class MultiplayerViewModel(
                             } else if (value["message"] == "No One Win The Game") {
                                 endGame(0)
                             } else if (value["message"] == "Get Data Player") {
-                                turn = value["nextTurn"].toString().toInt()
-                                if (turn == numberOfPlayer) {
-                                    turn = 1
-                                } else {
-                                    turn++
-                                }
+                                turn = value["currentPlayer"].toString().toInt()
+
                                 getBoard()
 
                             } else if (value["message"] == "Start Time") {
