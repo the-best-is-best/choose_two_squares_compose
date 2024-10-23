@@ -135,9 +135,8 @@ class MultiplayerViewModel(
                                 endGame(0)
                             } else if (value["message"] == "Get Data Player") {
                                 turn = value["nextTurn"].toString().toInt()
-                                if (turn != player) {
                                     getBoard()
-                                }
+
 
                             } else if (value["message"] == "Start Time") {
                                 timeStart = 30
@@ -267,11 +266,13 @@ class MultiplayerViewModel(
 
     private fun getBoard() {
         timeStart = 15
+        if (turn != player) {
 
-        if (turn == numberOfPlayer) {
-            turn = 1 // Reset to player 1 after the last player
-        } else {
-            turn++ // Move to the next player
+            if (turn == numberOfPlayer) {
+                turn = 1 // Reset to player 1 after the last player
+            } else {
+                turn++ // Move to the next player
+            }
         }
         state.value = state.value.copy(
                 loading = true
