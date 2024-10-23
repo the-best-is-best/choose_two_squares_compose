@@ -135,6 +135,11 @@ class MultiplayerViewModel(
                                 endGame(0)
                             } else if (value["message"] == "Get Data Player") {
                                 turn = value["nextTurn"].toString().toInt()
+                                if (turn == numberOfPlayer) {
+                                    turn = 1
+                                } else {
+                                    turn++
+                                }
                                 getBoard()
 
                             } else if (value["message"] == "Start Time") {
@@ -304,7 +309,7 @@ class MultiplayerViewModel(
                 val roomData = mapOf("message" to "Start Time", "currentPlayer" to player)
                 updateRoom(roomData)
 
-//
+
 //                if (turn == numberOfPlayer) {
 //                    turn = 1
 //                } else {
