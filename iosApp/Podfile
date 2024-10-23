@@ -10,7 +10,7 @@ target 'iosApp' do
   pod 'FirebaseCrashlytics' , '11.3.0'
   pod 'FirebaseDatabase' , '11.3.0'
   pod 'FirebaseAnalytics' , '11.3.0'
-  pod 'KAdmob' , '0.1.0-13-rc'
+  pod 'KAdmob' , '0.1.2'
 
 
 end

@@ -260,22 +260,27 @@ class MultiplayerViewModel(
 
                         "Next Player" -> {
                             getBoardLocal(number1, number2)
-                            var nextTurn: Int = player
-                            if (nextTurn == numberOfPlayer) {
-                                nextTurn = 1
-                            } else {
-                                nextTurn++
-                            }
 
+                            // Set nextTurn based on the current player
+                            var nextTurn = player
+
+                            // If the current player is the last player, reset to 1, otherwise move to the next player
+                            nextTurn = if (nextTurn == numberOfPlayer) 1 else nextTurn + 1
+
+                            // Reset timeStart or any other necessary fields
                             timeStart = -1
+
+                            // Prepare the data to update the room
                             val roomData = mapOf(
                                 "message" to "Get Data Player",
                                 "nextTurn" to nextTurn,
                                 "currentPlayer" to player
                             )
-                            updateRoom(roomData)
 
+                            // Update the room with the new turn information
+                            updateRoom(roomData)
                         }
+
 
                         "Player Win" -> {
                             timeStart = -1
