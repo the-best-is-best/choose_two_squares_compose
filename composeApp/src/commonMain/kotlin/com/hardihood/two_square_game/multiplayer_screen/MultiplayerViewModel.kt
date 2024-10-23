@@ -262,7 +262,7 @@ class MultiplayerViewModel(
                             getBoardLocal(number1, number2)
 
                             // Set nextTurn based on the current player
-                            var nextTurn = player
+                            var nextTurn = turn
 
                             // If the current player is the last player, reset to 1, otherwise move to the next player
                             nextTurn = if (nextTurn == numberOfPlayer) 1 else nextTurn + 1
