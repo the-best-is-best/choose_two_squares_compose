@@ -8,7 +8,6 @@ import com.hardihood.two_square_game.core.models.TypeModeGame
 
 class HomeViewModel : ScreenModel {
 
-    private var adShowed = false
 
     val typesModeGame = listOf(
         TypeModeGame(
@@ -37,21 +36,14 @@ class HomeViewModel : ScreenModel {
     fun playOffline() {
         playOnline = false
         showPlayWithFriendsQuestion = true
-        if (!adShowed) {
-            com.hardihood.two_square_game.core.services.AdServices.showInterstitialAd()
-            adShowed = true
-        }
 
     }
 
     fun playOnline() {
         playOnline = true
-        // multiplayerViewModel.resetGame()
-        if (!adShowed) {
-            com.hardihood.two_square_game.core.services.AdServices.showInterstitialAd()
-            showNumOfPlayerQuestion = true
-        }
+        showNumOfPlayerQuestion = true
     }
+
 
 
     var boardSize: Int = 4
