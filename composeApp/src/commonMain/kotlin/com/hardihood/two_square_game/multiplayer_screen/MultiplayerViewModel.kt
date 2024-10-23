@@ -53,26 +53,6 @@ class MultiplayerViewModel(
 
     private var currentDatabase: Map<*, *>? = null
 
-    //   var canBack by mutableStateOf(false)
-
-//    fun resetGame() {
-//        turn = 1
-//        this.board.clear()
-//        this.numberOfPlayer = 2
-//        this.endGame = false
-//        this.roomError = false
-//        this.playerLost = null
-//        this.playerWin = null
-//        this.number1 = null
-//        this.number2 = null
-//        this.gameStarted = false
-//        this.gameDraw = false
-//        this.timeStart = 30
-//        this.player = 1
-//        this.idRoom = null
-//        this.myDatabase = KFirebaseDatabase()
-
-    //  }
 
     fun startGame(boardSize: Int, numberOfPlayer: Int) {
 
@@ -135,44 +115,7 @@ class MultiplayerViewModel(
     }
 
     private fun addListener() {
-//        screenModelScope.launch {
-//            myDatabase.child(idRoom!!.toString()).valueEvents.collect { collector ->
-//                val valueAny = collector.value
-//                val value = if (valueAny is Map<*, *>) valueAny else null
-//                if (currentDatabase != value) {
-//                    currentDatabase = value
-//                    println("new data value $value")
-//
-//                    if (value != null) {
-//                        if (value["message"] == "joined") {
-//                            playerJoined()
-//                        } else if (value["message"] == "player win" || value["message"] == "Player Win") {
-//                            endGame(value["currentPlayer"].toString().toInt())
-//                        } else if (value["message"] == "player lost") {
-//                            lostPlayer(value["currentPlayer"].toString().toInt())
-//                        } else if (value["message"] == "No One Win The Game") {
-//                            endGame(0)
-//                        } else if (value["message"] == "Get Data Player") {
-//                            if (value["currentPlayer"] != turn) {
-//
-//                                getBoard(value["nextTurn"].toString().toInt())
-//                            }
-//                        } else if (value["message"] == "Start Time") {
-//                            timeStart = 30
-//                            startTimer()
-//                        } else if (value["message"].toString() == "room issue") {
-//                            roomIssue()
-//                        } else {
-//                            println("firebase got nothing ${value["message"]}")
-//                        }
-//
-//                    }
-//
-//                }
-//            }
-//
-//        }
-//    }
+
         screenModelScope.launch {
             myDatabase.addObserveValueListener(idRoom!!.toString()).collect { res ->
                 res.onSuccess {
@@ -191,10 +134,9 @@ class MultiplayerViewModel(
                             } else if (value["message"] == "No One Win The Game") {
                                 endGame(0)
                             } else if (value["message"] == "Get Data Player") {
-                                if (value["currentPlayer"] != turn) {
+                                turn = value["nextTurn"].toString().toInt()
+                                getBoard()
 
-                                    getBoard(value["nextTurn"].toString().toInt())
-                                }
                             } else if (value["message"] == "Start Time") {
                                 timeStart = 30
                                 startTimer()
@@ -222,13 +164,13 @@ class MultiplayerViewModel(
             number2 = number
         }
 
-        _played(number1!!, number2!!)
+        played(number1!!, number2!!)
 
         number1 = null
         number2 = null
     }
 
-    private fun _played(number1: Int, number2: Int) {
+    private fun played(number1: Int, number2: Int) {
 
         screenModelScope.launch {
             state.value = state.value.copy(
@@ -260,27 +202,21 @@ class MultiplayerViewModel(
 
                         "Next Player" -> {
                             getBoardLocal(number1, number2)
+                            if (turn == numberOfPlayer) {
+                                turn = 1
+                            } else {
+                                turn++
+                            }
 
-                            // Set nextTurn based on the current player
-                            var nextTurn = turn
-
-                            // If the current player is the last player, reset to 1, otherwise move to the next player
-                            nextTurn = if (nextTurn == numberOfPlayer) 1 else nextTurn + 1
-
-                            // Reset timeStart or any other necessary fields
                             timeStart = -1
-
-                            // Prepare the data to update the room
                             val roomData = mapOf(
                                 "message" to "Get Data Player",
-                                "nextTurn" to nextTurn,
+                                "nextTurn" to turn,
                                 "currentPlayer" to player
                             )
-
-                            // Update the room with the new turn information
                             updateRoom(roomData)
-                        }
 
+                        }
 
                         "Player Win" -> {
                             timeStart = -1
@@ -339,10 +275,10 @@ class MultiplayerViewModel(
         board[number2 - 1] = "-1"
     }
 
-    private fun getBoard(playerTurn: Int) {
+    private fun getBoard() {
         timeStart = 15
-        if (playerTurn == player) {
-            state.value = state.value.copy(
+
+        state.value = state.value.copy(
                 loading = true
             )
 
@@ -368,7 +304,7 @@ class MultiplayerViewModel(
                 val roomData = mapOf("message" to "Start Time", "currentPlayer" to player)
                 updateRoom(roomData)
 
-
+//
 //                if (turn == numberOfPlayer) {
 //                    turn = 1
 //                } else {
@@ -380,15 +316,6 @@ class MultiplayerViewModel(
                     )
                 return@launch
             }
-
-        } else {
-            timeStart = -1
-//            if (turn == numberOfPlayer) {
-//                turn = 1
-//            } else {
-//                turn += 1
-//            }
-        }
 
 
     }
