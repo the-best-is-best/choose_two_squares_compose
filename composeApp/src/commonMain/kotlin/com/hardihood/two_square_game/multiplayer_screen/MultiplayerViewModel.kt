@@ -369,11 +369,11 @@ class MultiplayerViewModel(
                 updateRoom(roomData)
 
 
-                if (turn == numberOfPlayer) {
-                    turn = 1
-                } else {
-                    turn += 1
-                }
+//                if (turn == numberOfPlayer) {
+//                    turn = 1
+//                } else {
+//                    turn += 1
+//                }
                 state.value = state.value.copy(
                     loading = false,
 
@@ -383,11 +383,11 @@ class MultiplayerViewModel(
 
         } else {
             timeStart = -1
-            if (turn == numberOfPlayer) {
-                turn = 1
-            } else {
-                turn += 1
-            }
+//            if (turn == numberOfPlayer) {
+//                turn = 1
+//            } else {
+//                turn += 1
+//            }
         }
 
 
