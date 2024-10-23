@@ -134,9 +134,10 @@ class MultiplayerViewModel(
                             } else if (value["message"] == "No One Win The Game") {
                                 endGame(0)
                             } else if (value["message"] == "Get Data Player") {
-                                turn = value["currentPlayer"].toString().toInt()
-
-                                getBoard()
+                                turn = value["nextTurn"].toString().toInt()
+                                if (turn != player) {
+                                    getBoard()
+                                }
 
                             } else if (value["message"] == "Start Time") {
                                 timeStart = 30
@@ -172,7 +173,6 @@ class MultiplayerViewModel(
     }
 
     private fun played(number1: Int, number2: Int) {
-
         screenModelScope.launch {
             state.value = state.value.copy(
                 loading = true
@@ -180,7 +180,7 @@ class MultiplayerViewModel(
             val result = playGameUseCase(
                 playRoomRequest = PlayRoomRequest(
                     roomId = idRoom!!,
-                    playerId = player,
+                    playerId = player, // This represents the player making the move
                     number1 = number1,
                     number2 = number2
                 )
@@ -188,47 +188,38 @@ class MultiplayerViewModel(
 
             result.fold(
                 right = {
-
                     when (it.message) {
                         "No One Win The Game" -> {
                             getBoardLocal(number1, number2)
                             timeStart = -1
                             val roomData =
-                                mapOf("message" to "No One Win The Game", "currentPlayer" to player)
+                                mapOf("message" to "No One Win The Game", "currentPlayer" to turn)
                             updateRoom(roomData)
-
-
                             gameDraw = true
                         }
 
                         "Next Player" -> {
                             getBoardLocal(number1, number2)
+                            // Move to the next player
                             if (turn == numberOfPlayer) {
-                                turn = 1
+                                turn = 1 // Reset to player 1 after the last player
                             } else {
-                                turn++
+                                turn++ // Move to the next player
                             }
-
                             timeStart = -1
                             val roomData = mapOf(
                                 "message" to "Get Data Player",
-                                "nextTurn" to turn,
-                                "currentPlayer" to player
+                                "nextTurn" to turn,  // This should be the next player's turn
+                                "currentPlayer" to player // This stays the current player (the one making the move)
                             )
                             updateRoom(roomData)
-
                         }
 
                         "Player Win" -> {
                             timeStart = -1
-
                             val roomData =
                                 mapOf("message" to "Player Win", "currentPlayer" to player)
                             updateRoom(roomData)
-
-
-                            //val sendData = mapOf("message" to "Player Win-$player")
-
                         }
 
                         "You can't play here" -> {
@@ -246,7 +237,6 @@ class MultiplayerViewModel(
                     }
                 },
                 left = {
-
                     state.value = state.value.copy(
                         loading = false,
                         errorMessage = it,
@@ -254,14 +244,13 @@ class MultiplayerViewModel(
                     handleError()
                     return@launch
                 }
-
             )
             state.value = state.value.copy(
                 loading = false
             )
-
         }
     }
+
 
     private fun startTimer() {
         timeStart = 30
@@ -279,6 +268,11 @@ class MultiplayerViewModel(
     private fun getBoard() {
         timeStart = 15
 
+        if (turn == numberOfPlayer) {
+            turn = 1 // Reset to player 1 after the last player
+        } else {
+            turn++ // Move to the next player
+        }
         state.value = state.value.copy(
                 loading = true
             )
