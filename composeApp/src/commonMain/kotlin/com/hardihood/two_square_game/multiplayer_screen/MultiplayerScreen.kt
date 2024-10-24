@@ -84,11 +84,14 @@ data class MultiplayerScreen(
             val observer = LifecycleEventObserver { _, event ->
                 when (event) {
                     Lifecycle.Event.ON_STOP, Lifecycle.Event.ON_PAUSE -> {
-                        if (viewModel.idRoom != null) {
-                            viewModel.logout()
+                        if (!viewModel.endGame) {
+
+                            if (viewModel.idRoom != null) {
+                                viewModel.logout()
+
+                            }
 
                         }
-
                     }
 
                     else -> {
