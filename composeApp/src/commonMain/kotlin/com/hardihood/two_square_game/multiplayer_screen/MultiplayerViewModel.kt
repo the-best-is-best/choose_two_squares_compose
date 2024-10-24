@@ -124,7 +124,11 @@ class MultiplayerViewModel(
 
                     if (currentDatabase != value) {
                         currentDatabase = value
+
                         if (value != null) {
+                            if (value["message"] != "joined") {
+                                turn = value["nextTurn"].toString().toInt()
+                            }
                             if (value["message"] == "joined") {
                                 playerJoined()
                             } else if (value["message"] == "player win" || value["message"] == "Player Win") {
@@ -134,8 +138,8 @@ class MultiplayerViewModel(
                             } else if (value["message"] == "No One Win The Game") {
                                 endGame(0)
                             } else if (value["message"] == "Get Data Player") {
-                                turn = value["nextTurn"].toString().toInt()
-                                    getBoard()
+
+                                getBoard()
 
 
                             } else if (value["message"] == "Start Time") {
@@ -266,14 +270,7 @@ class MultiplayerViewModel(
 
     private fun getBoard() {
         timeStart = 15
-        if (turn != player) {
 
-            if (turn == numberOfPlayer) {
-                turn = 1 // Reset to player 1 after the last player
-            } else {
-                turn++ // Move to the next player
-            }
-        }
         state.value = state.value.copy(
                 loading = true
             )
@@ -301,11 +298,6 @@ class MultiplayerViewModel(
                 updateRoom(roomData)
 
 
-//                if (turn == numberOfPlayer) {
-//                    turn = 1
-//                } else {
-//                    turn += 1
-//                }
                 state.value = state.value.copy(
                     loading = false,
 
