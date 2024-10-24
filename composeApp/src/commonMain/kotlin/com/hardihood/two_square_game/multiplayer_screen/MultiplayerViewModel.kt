@@ -126,9 +126,12 @@ class MultiplayerViewModel(
                         currentDatabase = value
 
                         if (value != null) {
-                            if (value["message"] != "joined") {
+                            try {
                                 turn = value["nextTurn"].toString().toInt()
+
+                            } catch (e: Exception) {
                             }
+
                             if (value["message"] == "joined") {
                                 playerJoined()
                             } else if (value["message"] == "player win" || value["message"] == "Player Win") {
