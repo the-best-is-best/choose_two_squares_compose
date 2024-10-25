@@ -9,6 +9,7 @@
         android:label="Choose two squares"
         android:allowClearUserData="true"
         android:enableOnBackInvokedCallback="true"
+        android:extractNativeLibs="true"
         android:theme="@android:style/Theme.Material.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:targetApi="tiramisu">

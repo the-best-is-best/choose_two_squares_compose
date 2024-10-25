@@ -139,6 +139,18 @@ android {
     namespace = "com.hardihood.two_square_game"
     compileSdk = 35
 
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = true
+            multiDexEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+
+            proguardFiles("-verbose")
+        }
+    }
 
     splits {
 
@@ -155,7 +167,11 @@ android {
             compatibleScreens("small", "normal", "large", "xlarge")
         }
     }
-
+    packaging {
+        jniLibs {
+            useLegacyPackaging = true
+        }
+    }
     defaultConfig {
         minSdk = 24
         targetSdk = 35
