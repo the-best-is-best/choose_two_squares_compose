@@ -24,11 +24,12 @@ import cafe.adriel.voyager.navigator.Navigator
 import com.hardihood.two_square_game.core.AppColors
 import com.hardihood.two_square_game.splash_screen.SplashScreen
 import com.hardihood.two_square_game.theme.AppTheme
+import io.github.tbib.compose_check_for_update.CheckForUpdateDialog
 
 @Composable
 internal fun App() = AppTheme(useDarkTheme = false) {
     val focusManager = LocalFocusManager.current
-
+    CheckForUpdateDialog(true)
     Surface(
 
         color = AppColors.mainColor,

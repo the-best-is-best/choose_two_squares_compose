@@ -94,6 +94,8 @@ kotlin {
             implementation(libs.lifecycle.compose)
 
 
+            implementation(libs.compose.check.update)
+
 
         }
 
@@ -137,6 +139,22 @@ android {
     namespace = "com.hardihood.two_square_game"
     compileSdk = 35
 
+
+    splits {
+
+        // Configures multiple APKs based on screen density.
+        density {
+
+            // Configures multiple APKs based on screen density.
+            isEnable = true
+
+            // Specifies a list of screen densities you don't want Gradle to create multiple APKs for.
+            exclude("ldpi", "xxhdpi", "xxxhdpi")
+
+            // Specifies a list of compatible screen size settings for the manifest.
+            compatibleScreens("small", "normal", "large", "xlarge")
+        }
+    }
 
     defaultConfig {
         minSdk = 24

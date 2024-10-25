@@ -12,6 +12,7 @@ import io.github.firebase_analytics.AndroidKFirebaseAnalytics
 import io.github.firebase_core.AndroidKFirebaseCore
 import io.github.firebase_crashlytics.KFirebaseCrashlytics
 import io.github.kadmob.AndroidKAdmob
+import io.github.tbib.compose_check_for_update.AndroidCheckForUpdate
 import io.github.tbib.compose_toast.AndroidLogoToast
 import org.koin.core.context.startKoin
 
@@ -25,6 +26,7 @@ class AppActivity : ComponentActivity() {
         AndroidKFirebaseAnalytics.initialization(this)
         KFirebaseCrashlytics().setCrashlyticsCollectionEnabled(true)
         AndroidLogoToast.initialization(this)
+        AndroidCheckForUpdate.initialization(this)
         startKoin {
             modules(getSharedModules() + appModules)
         }
